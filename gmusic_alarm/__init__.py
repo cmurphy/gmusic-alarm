@@ -43,7 +43,7 @@ def get_tracks(gclient, stations):
 
 def play_tracks(gclient, tracks):
     device_id = get_device_id(gclient)
-    vlc_client = vlc.Instance()
+    vlc_client = vlc.Instance('--file-caching 3000')
     player = vlc_client.media_player_new()
     # The MediaList type doesn't understand streams properly, so we need to
     # get the song length from the gmusicapi data and use that to stop the
@@ -54,7 +54,8 @@ def play_tracks(gclient, tracks):
                                             device_id=device_id)
         media = vlc_client.media_new(stream_url)
         player.set_media(media)
-        end_time = time.time() * 1000 + duration
+        # +3000 - Give laggy songs extra time to finish
+        end_time = time.time() * 1000 + duration + 3000
         while time.time() * 1000 < end_time:
             player.play()
 
