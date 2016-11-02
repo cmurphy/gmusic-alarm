@@ -56,3 +56,6 @@ def main():
     station = get_station(gclient)
     tracks = get_tracks(gclient, station)
     play_tracks(gclient, tracks)
+
+if __name__ == '__main__':
+    main()
