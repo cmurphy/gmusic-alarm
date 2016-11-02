@@ -1,6 +1,9 @@
 import os
+import json
+import time
 
 import configparser
+from contextlib import redirect_stderr
 
 from gmusicapi import Mobileclient
 import vlc
@@ -35,19 +38,24 @@ def get_station(gclient):
     return stations[0]
 
 def get_tracks(gclient, stations):
-    tracks = gclient.get_station_tracks(stations['id'], num_tracks=1)
+    tracks = gclient.get_station_tracks(stations['id'])
     return tracks
 
 def play_tracks(gclient, tracks):
     device_id = get_device_id(gclient)
     vlc_client = vlc.Instance()
     player = vlc_client.media_player_new()
+    # The MediaList type doesn't understand streams properly, so we need to
+    # get the song length from the gmusicapi data and use that to stop the
+    # player and start the next song using just the Media type.
     for track in tracks:
-        stream_url = gclient.get_stream_url(tracks[0]['nid'],
+        duration = int(track['durationMillis'])
+        stream_url = gclient.get_stream_url(track['nid'],
                                             device_id=device_id)
         media = vlc_client.media_new(stream_url)
         player.set_media(media)
-        while True:
+        end_time = time.time() * 1000 + duration
+        while time.time() * 1000 < end_time:
             player.play()
 
 def main():
