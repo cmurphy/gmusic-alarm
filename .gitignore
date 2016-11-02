@@ -1,2 +1,3 @@
 .venv
-gmusic_alarm/vlc.py
+gmusic_alarm/__pycache__
+*.pyc
