@@ -5,6 +5,7 @@ from gmusicapi import Mobileclient
 
 CREDENTIALS_FILE = '~/.gmusic-alarm-creds'
 
+
 class GClient:
 
     def __init__(self):
@@ -27,9 +28,8 @@ class GClient:
             print("Failed to log in.")
             exit(1)
 
-
     def get_device_id(self):
-        # Get all devices, pick the first one, get its ID, strip the leading '0x'
+        # Get all devices, pick the first, get its ID, strip the leading '0x'
         self.device_id = self._gclient.get_registered_devices()[0]['id'][2:]
         return self.device_id
 

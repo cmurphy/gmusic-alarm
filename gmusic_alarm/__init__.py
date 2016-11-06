@@ -2,7 +2,7 @@ import time
 
 import vlc
 
-import gmusic_alarm.gmusic_client
+from gmusic_alarm import gmusic_client
 
 
 def play_tracks(gclient, tracks):
@@ -20,6 +20,7 @@ def play_tracks(gclient, tracks):
         end_time = time.time() * 1000 + duration + 3000
         while time.time() * 1000 < end_time:
             player.play()
+
 
 def main():
     gclient = gmusic_client.GClient()
