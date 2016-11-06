@@ -2,7 +2,7 @@ import time
 
 import vlc
 
-import gmusic_client
+import gmusic_alarm.gmusic_client
 
 
 def play_tracks(gclient, tracks):
