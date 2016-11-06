@@ -32,3 +32,12 @@ class TestGmusicClient(TestCase):
         mock_kwargs = {'return_value': fake_registered_devices}
         mobileclient_mock.get_registered_devices = Mock(**mock_kwargs)
         self.assertEqual(self.gclient.get_device_id(), '12345')
+
+    def test_get_station(self):
+        mobileclient_mock = gmusic_client.Mobileclient
+        fake_station_1 = {'inLibrary': False, 'id': 'station1'}
+        fake_station_2 = {'inLibrary': True, 'id': 'station2'}
+        fake_station_3 = {'inLibrary': False, 'id': 'station3'}
+        fake_stations = [fake_station_1, fake_station_2, fake_station_3]
+        mobileclient_mock.get_all_stations = Mock(return_value=fake_stations)
+        self.assertEqual(self.gclient.get_station(), fake_station_2)
