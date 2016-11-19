@@ -1,3 +1,5 @@
+import time
+
 import vlc
 
 from gmusic_alarm import gmusic_client
@@ -14,8 +16,9 @@ def play_tracks(gclient, tracks):
         stream_url = gclient.get_stream_url(track['nid'])
         media = vlc_client.media_new(stream_url)
         player.set_media(media)
+        player.play()
         while player.get_time() < duration:
-            player.play()
+            time.sleep(5)
 
 
 def main():
