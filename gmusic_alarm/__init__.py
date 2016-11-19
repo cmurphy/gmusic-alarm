@@ -6,7 +6,7 @@ from gmusic_alarm import gmusic_client
 
 
 def play_tracks(gclient, tracks):
-    vlc_client = vlc.Instance('--file-caching 3000')
+    vlc_client = vlc.Instance('--file-caching 3000 --aout=ALSA')
     player = vlc_client.media_player_new()
     # The MediaList type doesn't understand streams properly, so we need to
     # get the song length from the gmusicapi data and use that to stop the
