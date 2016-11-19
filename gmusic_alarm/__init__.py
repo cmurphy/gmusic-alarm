@@ -1,5 +1,3 @@
-import time
-
 import vlc
 
 from gmusic_alarm import gmusic_client
@@ -16,9 +14,7 @@ def play_tracks(gclient, tracks):
         stream_url = gclient.get_stream_url(track['nid'])
         media = vlc_client.media_new(stream_url)
         player.set_media(media)
-        # +3000 - Give laggy songs extra time to finish
-        end_time = time.time() * 1000 + duration + 3000
-        while time.time() * 1000 < end_time:
+        while player.get_time() < duration:
             player.play()
 
 
