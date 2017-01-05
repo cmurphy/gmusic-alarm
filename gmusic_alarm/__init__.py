@@ -23,8 +23,15 @@ def play_tracks(gclient, tracks, verbose):
             print('Now playing "{title}" by {artist}'.format(title=title,
                                                              artist=artist))
         player.play()
-        while player.get_time() < duration:
-            time.sleep(5)
+        last_time = -1
+        player_time = player.get_time()
+        while player_time  < duration:
+            if last_time == player_time: # Something is wrong with the track, just move on
+                break
+            else:
+                last_time = player_time
+                time.sleep(5)
+            player_time = player.get_time()
 
 
 def main():
